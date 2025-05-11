@@ -32,6 +32,10 @@ bun dev
 - [ ] Global Shortcuts
 - [ ] Themes
 
+## Icon Prompt
+
+A beautiful minimalistic app icon based on glassmorphism. It should demonstrate Michelangelo's famous painting - creation of Adam where two fingers touch. There is halo light in the background and the two hands form a beautiful and distinguishable silhouette. The idea is that this is an AI chat app and the icon should reflect that same emotion - that user is being given otherworldly wisdom.
+
 ## License
 
 MIT
