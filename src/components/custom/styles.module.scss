@@ -1,0 +1,35 @@
+	.customButton {
+	  position: relative;
+	  background: none;
+	  outline: none;
+	  height: 28px;
+	  width: fit-content;
+	  cursor: pointer;
+	  border: none;
+	  border-radius: 5px;
+	  padding: 0.4rem 0.25rem;
+	  margin: 0 0.05rem;
+	  transition: 0.25s ease-in-out;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+
+	  &:hover {
+	    background-color: rgba(255, 255, 255, 0.15);
+	  }
+
+	  .buttonText {
+		width:100%;
+		font-size: 0.85rem;
+	    color: #fff;
+		display: flex;
+		justify-content: center;
+		align-items: center;	;
+	  }
+
+	  svg {
+	    height: 100%;
+	    width: 100%;
+	    color: #cbcbcb;
+	  }
+	}
