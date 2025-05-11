@@ -1,35 +1,50 @@
-	.customButton {
-	  position: relative;
-	  background: none;
-	  outline: none;
-	  height: 28px;
-	  width: fit-content;
-	  cursor: pointer;
-	  border: none;
-	  border-radius: 5px;
-	  padding: 0.4rem 0.25rem;
-	  margin: 0 0.05rem;
-	  transition: 0.25s ease-in-out;
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
+.buttonWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: fit-content;
+	height: 28px;
+}
 
-	  &:hover {
-	    background-color: rgba(255, 255, 255, 0.15);
-	  }
+.customButton {
+	position: relative;
+	background: none;
+	outline: none;
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	border: none;
+	border-radius: 5px;
+	margin: 0 0.05rem;
+	transition: 0.25s ease-in-out;
+	padding: 0.25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-	  .buttonText {
-		width:100%;
-		font-size: 0.85rem;
-	    color: #fff;
-		display: flex;
-		justify-content: center;
-		align-items: center;	;
-	  }
-
-	  svg {
-	    height: 100%;
-	    width: 100%;
-	    color: #cbcbcb;
-	  }
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.15);
 	}
+
+	svg {
+		height: 18px;
+		width: 18px;
+		color: #fff;
+	}
+}
+
+.buttonText {
+	font-size: 0.875rem;
+	color: #8c8c8c;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.1rem;
+	cursor: default;
+
+	svg {
+		height: 32px;
+		width: 32px;
+		color: #8c8c8c;
+	}
+}

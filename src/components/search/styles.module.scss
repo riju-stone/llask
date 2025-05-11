@@ -98,6 +98,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.25rem;
 }
 
 .searchActionButtonContainer {
@@ -108,4 +109,11 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+
+.modelSelectionWrapper{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
 }

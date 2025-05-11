@@ -8,12 +8,8 @@ function ModelSelectionDropDown()
 {
     return (
         <div className={styles.dropdownWrapper}>
-            <div className={styles.dropdownContainer}>
-                <div className={styles.dropdownHeader}>
-                    <div className={styles.dropdownTitle}>Model</div>
-                    <div className={styles.dropdownIcon}><ChevronDown/></div>
-                </div>
-            </div>
+            <div className={styles.modelName}>gemini-2.5-pro</div>
+            <div className={styles.modelDropdown}></div>
         </div>
     )
 }
