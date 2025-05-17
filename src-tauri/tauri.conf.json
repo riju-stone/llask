@@ -20,7 +20,8 @@
         "resizable": false,
         "skipTaskbar": true,
         "decorations": false,
-        "contentProtected": true
+        "contentProtected": true,
+        "alwaysOnTop": true
       }
     ],
     "security": {
