@@ -6,16 +6,17 @@ import styles from './styles.module.scss'
 const responseAnim = {
     initial: {
         opacity: 0,
-        y: -400
+        y: 70
     },
     show: {
         opacity: 1,
         y: 0,
         transition: {
-            duration: 0.5,
+            duration: 0.6,
             ease: [0.83, 0, 0.17, 1],
             opacity: {
-                duration: 0.35
+                duration: 0.2,
+                delay: 0.4
             }
         }
     }

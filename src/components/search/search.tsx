@@ -11,16 +11,14 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
     const searchContainer = useRef(null)
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const [containerHeight, setContainerHeight] = useState("5rem")
-    
+
     const searchBarAnim = {
         initial: {
             height: "0",
             opacity: 0,
-            padding: "0",
         },
         show: {
             opacity: 1,
-            padding: "0",
             height: `${containerHeight}`,
             transition: {
                 duration: 0.5,
@@ -33,7 +31,6 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
         search: {
             height: `${containerHeight}`,
             opacity: 1,
-            padding: "2px",
             transition: {
                 duration: 0.2,
                 ease: easeIn
@@ -42,41 +39,45 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
     }
 
     // Auto-resize the textarea on input
-    const handleInput = () => {
+
+    const handleInput = () =>
+    {
         if (textareaRef.current) {
             // Reset height to calculate properly
             textareaRef.current.style.height = "auto";
-            
+
             // Calculate the new height based on content
             const scrollHeight = textareaRef.current.scrollHeight;
-            
+
             // Set textarea height directly to avoid scroll
             textareaRef.current.style.height = `${scrollHeight}px`;
-            
+
             // Update container height - accounting for padding and action container
             const actionContainerHeight = 16; // 2.5rem in pixels
             const padding = 32; // Additional padding for container
-            
+
             // Calculate new container height with constraints
             const minHeight = 80; // 5rem
             const maxHeight = 160; // 10rem
             const newHeight = Math.min(Math.max(scrollHeight + actionContainerHeight + padding, minHeight), maxHeight);
-            
+
             // Important: Update both state and directly set the style
             setContainerHeight(`${newHeight}px`);
-            
+
             // Directly set the style on the container for immediate effect
             if (searchContainer.current) {
                 (searchContainer.current as HTMLElement).style.height = `${newHeight}px`;
             }
         }
     }
-    
+
     // Ensure textarea is properly sized when component mounts or searching state changes
-    useEffect(() => {
+    useEffect(() =>
+    {
         if (textareaRef.current) {
             // Add a slight delay to ensure DOM is ready
-            setTimeout(() => {
+            setTimeout(() =>
+            {
                 handleInput();
             }, 10);
         }
@@ -87,9 +88,12 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
             ref={searchContainer}
             className={styles.searchWrapper}
             style={{ height: searching ? containerHeight : "6rem" }}
-            variants={searchBarAnim} 
-            initial="initial" 
-            animate={searching ? "search" : "show"}>
+            variants={searchBarAnim}
+            initial="initial"
+            animate={searching ? "search" : "show"}
+        // onMouseEnter={handleMouseEnter}
+        // onMouseLeave={handleMouseLeave}
+        >
             <div className={styles.searchContainer}>
                 <div className={styles.searchInputContainer}>
                     <textarea
