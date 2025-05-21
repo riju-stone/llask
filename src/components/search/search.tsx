@@ -3,11 +3,11 @@ import styles from "./styles.module.scss"
 import { motion } from "motion/react"
 import { easeIn } from "motion"
 import ButtonComponent from "../custom/button"
-import ModelSelectionDropDown from "../model/Model"
-import { SendHorizonal, File, Brain, Image, Earth, CommandIcon, CornerDownLeft, Package } from "lucide-react"
+import { SendHorizonal, File, Brain, Image, Earth, CommandIcon, CornerDownLeft, Package, Slash, Hash } from "lucide-react"
+import { useResizeAppWindow } from "../../hooks/resize"
+import debounce from "../../utils/debounce"
 
-function SearchComponent({ searching, setSearching }: { searching: boolean, setSearching: (searching: boolean) => void })
-{
+function SearchComponent({ searching, setSearching }: { searching: boolean, setSearching: (searching: boolean) => void }) {
     const searchContainer = useRef(null)
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const [containerHeight, setContainerHeight] = useState("5rem")
@@ -38,9 +38,8 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
         }
     }
 
-    // Auto-resize the textarea on input
-    const handleInput = () =>
-    {
+    // TODO fix the height animation 
+    const handleInput = debounce(() => {
         if (textareaRef.current) {
             // Reset height to calculate properly
             textareaRef.current.style.height = "auto";
@@ -61,27 +60,29 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
             const newHeight = Math.min(Math.max(scrollHeight + actionContainerHeight + padding, minHeight), maxHeight);
 
             // Important: Update both state and directly set the style
-            setContainerHeight(`${newHeight}px`);
+            useResizeAppWindow(newHeight + 20)
+            setTimeout(() => setContainerHeight(`${newHeight}px`), 150)
 
             // Directly set the style on the container for immediate effect
             if (searchContainer.current) {
-                (searchContainer.current as HTMLElement).style.height = `${newHeight}px`;
+                setTimeout(() => {
+                    (searchContainer.current as unknown as HTMLElement).style.height = `${newHeight}px`;
+                }, 150)
             }
         }
-    }
+    }, 50)
 
-    const handleSearch = () =>
-    {
+    // FIXME: This is a temporary fix to ensure the textarea is properly sized when the component mounts
+    const handleSearch = () => {
         setSearching(!searching);
+        useResizeAppWindow(searching ? 100 : 500);
     }
 
     // Ensure textarea is properly sized when component mounts or searching state changes
-    useEffect(() =>
-    {
+    useEffect(() => {
         if (textareaRef.current) {
             // Add a slight delay to ensure DOM is ready
-            setTimeout(() =>
-            {
+            setTimeout(() => {
                 handleInput();
             }, 10);
         }
@@ -95,6 +96,7 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
             variants={searchBarAnim}
             initial="initial"
             animate={searching ? "search" : "show"}
+
         // onMouseEnter={handleMouseEnter}
         // onMouseLeave={handleMouseLeave}
         >
@@ -121,10 +123,11 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
                         <ButtonComponent logo={<File />} click={() => { }} />
                         <ButtonComponent logo={<Image />} click={() => { }} />
                     </div>
-                    <div className={styles.modelSelectionWrapper}>
-                        <ModelSelectionDropDown />
-                        <ButtonComponent logo={<Package />} click={() => { }} />
-                    </div>
+                    {/* <ModelSelectionDropDown /> */}
+                    <ButtonComponent
+                        logo={<Package />}
+                        label={<><CommandIcon /> + <Hash /></>}
+                        click={() => { }} />
                     <ButtonComponent logo={<SendHorizonal />} click={handleSearch}
                         label={<><CommandIcon /> + <CornerDownLeft /></>} />
                 </div>
