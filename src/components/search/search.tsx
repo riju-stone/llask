@@ -14,8 +14,8 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
 
     const searchBarAnim = {
         initial: {
-            height: "0",
-            opacity: 0,
+            height: "0px",
+            opacity: 0
         },
         show: {
             opacity: 1,
@@ -39,7 +39,6 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
     }
 
     // Auto-resize the textarea on input
-
     const handleInput = () =>
     {
         if (textareaRef.current) {
@@ -71,6 +70,11 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
         }
     }
 
+    const handleSearch = () =>
+    {
+        setSearching(!searching);
+    }
+
     // Ensure textarea is properly sized when component mounts or searching state changes
     useEffect(() =>
     {
@@ -86,7 +90,7 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
     return (
         <motion.div
             ref={searchContainer}
-            className={styles.searchWrapper}
+            className={`${styles.searchWrapper} ${searching ? styles.searchWrapperActive : styles.searchWrapperInActive}`}
             style={{ height: searching ? containerHeight : "6rem" }}
             variants={searchBarAnim}
             initial="initial"
@@ -121,7 +125,7 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
                         <ModelSelectionDropDown />
                         <ButtonComponent logo={<Package />} click={() => { }} />
                     </div>
-                    <ButtonComponent logo={<SendHorizonal />} click={() => setSearching(!searching)}
+                    <ButtonComponent logo={<SendHorizonal />} click={handleSearch}
                         label={<><CommandIcon /> + <CornerDownLeft /></>} />
                 </div>
             </div>

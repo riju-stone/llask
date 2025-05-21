@@ -1,6 +1,6 @@
-@property --rotate {
+@property --angle {
   syntax: "<angle>";
-  initial-value: 132deg;
+  initial-value: 0deg;
   inherits: false;
 }
 
@@ -15,25 +15,45 @@
   overflow: hidden;
   display: block;
   z-index: 9999;
+  padding: 3px;
   font-family: "Noto Sans", sans-serif;
   transition: height 0.2s ease !important;
-  /* Added !important to override any other transitions */
-  will-change: height;
-  /* Optimize for height changes */
+}
+
+.searchWrapperInActive {
+  background: rgb(20, 32, 47);
+  animation: none;
+  transition: 0.5s ease-in-out;
+}
+
+.searchWrapperActive {
+  background-image: linear-gradient(var(--angle),
+      #eea2a2 0%,
+      #bbc1bf 19%,
+      #57c6e1 42%,
+      #b49fda 79%,
+      #7ac5d8 100%);
+  background-size: 100% 200%;
+  animation: rotate 6s linear infinite;
+  transition: 0.5s ease-in-out;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
 }
 
 .searchContainer {
   height: 100%;
   width: 100%;
   background-color: rgb(25, 41, 59);
-  border: 4px solid rgb(20, 32, 47);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
-  /* Changed from auto to hidden */
 }
 
 .searchInputContainer {
@@ -76,6 +96,7 @@
     &::-webkit-scrollbar-thumb {
       background: rgb(20, 32, 47);
       border-radius: 10px;
+      cursor: grab;
     }
   }
 }
