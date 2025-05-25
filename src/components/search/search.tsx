@@ -3,7 +3,7 @@ import styles from "./styles.module.scss"
 import { motion } from "motion/react"
 import { easeIn } from "motion"
 import ButtonComponent from "../custom/button"
-import { SendHorizonal, File, Brain, Image, Earth, CommandIcon, CornerDownLeft, Package, Hash } from "lucide-react"
+import { SendHorizonal, File, Brain, Image, Earth, CommandIcon, CornerDownLeft, Package, Hash, CircleStop, PackageOpen } from "lucide-react"
 import { useResizeAppWindow } from "../../hooks/resize"
 import debounce from "../../utils/debounce"
 
@@ -99,9 +99,6 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
             variants={searchBarAnim}
             initial="initial"
             animate={searching ? "search" : "show"}
-
-        // onMouseEnter={handleMouseEnter}
-        // onMouseLeave={handleMouseLeave}
         >
             <div className={styles.searchContainer}>
                 <div className={styles.searchInputContainer}>
@@ -121,18 +118,41 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
                 </div>
                 <div className={styles.searchActionContainer}>
                     <div className={styles.searchActionButtonContainer}>
-                        <ButtonComponent logo={<Earth />} click={() => { }} />
-                        <ButtonComponent logo={<Brain />} click={() => { }} />
-                        <ButtonComponent logo={<File />} click={() => { }} />
-                        <ButtonComponent logo={<Image />} click={() => { }} />
+                        <ButtonComponent
+                            defaultIcon={<Earth />} buttonLabel="Web Search" clickBehavior={() => { }}
+                            showLabelOnCLick={true} changeIconOnClick={false} disabled={false}
+                        />
+                        <ButtonComponent
+                            defaultIcon={<Brain />} buttonLabel="Deep Think" clickBehavior={() => { }}
+                            showLabelOnCLick={true} changeIconOnClick={false} disabled={false}
+                        />
+                        <ButtonComponent
+                            defaultIcon={<File />} clickBehavior={() => { }}
+                            showLabelOnCLick={false} changeIconOnClick={false} disabled={false}
+                        />
+                        <ButtonComponent
+                            defaultIcon={<Image />} clickBehavior={() => { }}
+                            showLabelOnCLick={false} changeIconOnClick={false} disabled={false}
+                        />
                     </div>
                     {/* <ModelSelectionDropDown /> */}
                     <ButtonComponent
-                        logo={<Package />}
-                        label={<><CommandIcon /> + <Hash /></>}
-                        click={() => { }} />
-                    <ButtonComponent logo={<SendHorizonal />} click={handleSearch}
-                        label={<><CommandIcon /> + <CornerDownLeft /></>} />
+                        defaultIcon={<Package />}
+                        changeIconOnClick={true}
+                        activeIcon={<PackageOpen />}
+                        shortcut={<><CommandIcon /> + <Hash /></>}
+                        clickBehavior={() => { }}
+                        showLabelOnCLick={false}
+                        disabled={false}
+                    />
+                    <ButtonComponent
+                        defaultIcon={<SendHorizonal />}
+                        changeIconOnClick={true}
+                        activeIcon={<CircleStop />}
+                        showLabelOnCLick={false}
+                        clickBehavior={handleSearch}
+                        shortcut={<><CommandIcon /> + <CornerDownLeft /></>}
+                    />
                 </div>
             </div>
         </motion.div>

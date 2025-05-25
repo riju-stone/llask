@@ -6,7 +6,7 @@ import styles from './styles.module.scss'
 const responseAnim = {
     initial: {
         opacity: 0,
-        y: 70
+        y: -70
     },
     show: {
         opacity: 1,
@@ -16,7 +16,7 @@ const responseAnim = {
             ease: [0.83, 0, 0.17, 1],
             opacity: {
                 duration: 0.2,
-                delay: 0.4
+                delay: 0.2
             }
         }
     }
