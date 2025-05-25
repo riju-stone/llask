@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {motion} from "motion/react"
 import styles from "./styles.module.scss"
 
 function ButtonComponent({ logo, click, label }: { logo: React.ReactNode, click: React.MouseEventHandler, label?: React.ReactNode }) {

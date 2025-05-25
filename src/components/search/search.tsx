@@ -3,7 +3,7 @@ import styles from "./styles.module.scss"
 import { motion } from "motion/react"
 import { easeIn } from "motion"
 import ButtonComponent from "../custom/button"
-import { SendHorizonal, File, Brain, Image, Earth, CommandIcon, CornerDownLeft, Package, Slash, Hash } from "lucide-react"
+import { SendHorizonal, File, Brain, Image, Earth, CommandIcon, CornerDownLeft, Package, Hash } from "lucide-react"
 import { useResizeAppWindow } from "../../hooks/resize"
 import debounce from "../../utils/debounce"
 
@@ -38,7 +38,6 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
         }
     }
 
-    // TODO fix the height animation 
     const handleInput = debounce(() => {
         if (textareaRef.current) {
             // Reset height to calculate properly
@@ -60,22 +59,26 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
             const newHeight = Math.min(Math.max(scrollHeight + actionContainerHeight + padding, minHeight), maxHeight);
 
             // Important: Update both state and directly set the style
-            useResizeAppWindow(newHeight + 20)
-            setTimeout(() => setContainerHeight(`${newHeight}px`), 150)
+            setContainerHeight(`${newHeight}px`)
+
+            // Sett a fixed window height when searching
+            // This is a workaround to ensure the app window resizes correctly
+            // when the search bar expands
+            if (searching) {
+                useResizeAppWindow((510 + newHeight) - 90);
+            } else {
+                useResizeAppWindow(newHeight + 15);
+            }
 
             // Directly set the style on the container for immediate effect
             if (searchContainer.current) {
-                setTimeout(() => {
-                    (searchContainer.current as unknown as HTMLElement).style.height = `${newHeight}px`;
-                }, 150)
+                (searchContainer.current as HTMLElement).style.height = `${newHeight}px`;
             }
         }
-    }, 50)
+    }, 100)
 
-    // FIXME: This is a temporary fix to ensure the textarea is properly sized when the component mounts
     const handleSearch = () => {
         setSearching(!searching);
-        useResizeAppWindow(searching ? 100 : 500);
     }
 
     // Ensure textarea is properly sized when component mounts or searching state changes

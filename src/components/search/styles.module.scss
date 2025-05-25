@@ -18,12 +18,14 @@
   padding: 3px;
   font-family: "Noto Sans", sans-serif;
   transition: height 0.15s ease !important;
+  user-select: none;
 }
 
 .searchWrapperInActive {
   background: rgb(20, 32, 47);
   animation: none;
   transition: 0.5s ease-in-out;
+  user-select: none;
 }
 
 .searchWrapperActive {
@@ -36,6 +38,7 @@
   background-size: 100% 200%;
   animation: rotate 6s linear infinite;
   transition: 0.5s ease-in-out;
+  user-select: none;
 }
 
 @keyframes rotate {
@@ -82,6 +85,7 @@
     overflow-y: scroll; // Changed from auto to hidden to prevent scrollbar when not needed
     padding: 0.75rem 0.5rem 0.05rem 0.5rem;
     line-height: 1.5; // Add line-height for better text spacing
+    user-select: text;
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -112,6 +116,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.25rem;
+  user-select: none;
 }
 
 .searchActionButtonContainer {
