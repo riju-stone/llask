@@ -43,7 +43,7 @@ function ButtonComponent({
                 <motion.button
                     transition={{ duration: 0.2 }}
                     className={styles.buttonContainer} onClick={handleButtonClick} disabled={disabled}>
-                    {buttonLabel && buttonActive &&
+                    {buttonLabel && showLabelOnCLick && buttonActive &&
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}

@@ -7,7 +7,13 @@ import { SendHorizonal, File, Brain, Image, Earth, CommandIcon, CornerDownLeft, 
 import { useResizeAppWindow } from "../../hooks/resize"
 import debounce from "../../utils/debounce"
 
-function SearchComponent({ searching, setSearching }: { searching: boolean, setSearching: (searching: boolean) => void }) {
+type SearchComponentProps = {
+    mode: string;
+    setMode: (mode: string) => void;
+    currModel?: string;
+}
+
+function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
     const searchContainer = useRef(null)
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const [containerHeight, setContainerHeight] = useState("5rem")
@@ -61,12 +67,12 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
             // Important: Update both state and directly set the style
             setContainerHeight(`${newHeight}px`)
 
-            // Sett a fixed window height when searching
+            // Sett a fixed window height when im search mode
             // This is a workaround to ensure the app window resizes correctly
             // when the search bar expands
-            if (searching) {
+            if (mode === "search" || mode === "model") {
                 useResizeAppWindow((510 + newHeight) - 90);
-            } else {
+            } else if (mode === "off") {
                 useResizeAppWindow(newHeight + 15);
             }
 
@@ -78,10 +84,22 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
     }, 100)
 
     const handleSearch = () => {
-        setSearching(!searching);
+        if (mode === "search") {
+            setMode("off");
+        } else {
+            setMode("search");
+        }
     }
 
-    // Ensure textarea is properly sized when component mounts or searching state changes
+    const handleModelSelection = () => {
+        if (mode === "search" || mode === "off") {
+            setMode("model");
+        } else if (mode === "model") {
+            setMode("off");
+        }
+    }
+
+    // Ensure textarea is properly sized when component mounts or mode state changes
     useEffect(() => {
         if (textareaRef.current) {
             // Add a slight delay to ensure DOM is ready
@@ -89,16 +107,16 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
                 handleInput();
             }, 10);
         }
-    }, [searching]);
+    }, [mode]);
 
     return (
         <motion.div
             ref={searchContainer}
-            className={`${styles.searchWrapper} ${searching ? styles.searchWrapperActive : styles.searchWrapperInActive}`}
-            style={{ height: searching ? containerHeight : "6rem" }}
+            className={`${styles.searchWrapper} ${mode == "search" ? styles.searchWrapperActive : styles.searchWrapperInActive}`}
+            style={{ height: mode == "search" ? containerHeight : "6rem" }}
             variants={searchBarAnim}
             initial="initial"
-            animate={searching ? "search" : "show"}
+            animate={mode == "search" ? "search" : "show"}
         >
             <div className={styles.searchContainer}>
                 <div className={styles.searchInputContainer}>
@@ -135,20 +153,20 @@ function SearchComponent({ searching, setSearching }: { searching: boolean, setS
                             showLabelOnCLick={false} changeIconOnClick={false} disabled={false}
                         />
                     </div>
-                    {/* <ModelSelectionDropDown /> */}
+                    <div className={styles.modelName}>{currModel}</div>
                     <ButtonComponent
                         defaultIcon={<Package />}
                         changeIconOnClick={true}
-                        activeIcon={<PackageOpen />}
+                        activeIcon={mode !== "model" ? <Package /> : <PackageOpen />}
                         shortcut={<><CommandIcon /> + <Hash /></>}
-                        clickBehavior={() => { }}
+                        clickBehavior={handleModelSelection}
                         showLabelOnCLick={false}
                         disabled={false}
                     />
                     <ButtonComponent
                         defaultIcon={<SendHorizonal />}
                         changeIconOnClick={true}
-                        activeIcon={<CircleStop />}
+                        activeIcon={mode === "search" ? <CircleStop /> : <SendHorizonal />}
                         showLabelOnCLick={false}
                         clickBehavior={handleSearch}
                         shortcut={<><CommandIcon /> + <CornerDownLeft /></>}
