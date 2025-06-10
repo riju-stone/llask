@@ -153,24 +153,28 @@ function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
                             showLabelOnCLick={false} changeIconOnClick={false} disabled={false}
                         />
                     </div>
-                    <div className={styles.modelName}>{currModel}</div>
-                    <ButtonComponent
-                        defaultIcon={<Package />}
-                        changeIconOnClick={true}
-                        activeIcon={mode !== "model" ? <Package /> : <PackageOpen />}
-                        shortcut={<><CommandIcon /> + <Hash /></>}
-                        clickBehavior={handleModelSelection}
-                        showLabelOnCLick={false}
-                        disabled={false}
-                    />
-                    <ButtonComponent
-                        defaultIcon={<SendHorizonal />}
-                        changeIconOnClick={true}
-                        activeIcon={mode === "search" ? <CircleStop /> : <SendHorizonal />}
-                        showLabelOnCLick={false}
-                        clickBehavior={handleSearch}
-                        shortcut={<><CommandIcon /> + <CornerDownLeft /></>}
-                    />
+                    <div className={styles.modelNameContainer}>
+                        <div className={styles.modelName}>{currModel}</div>
+                    </div>
+                    <div className={styles.actionsContainer}>
+                        <ButtonComponent
+                            defaultIcon={<Package />}
+                            changeIconOnClick={true}
+                            activeIcon={mode !== "model" ? <Package /> : <PackageOpen />}
+                            shortcut={<><CommandIcon /> + <Hash /></>}
+                            clickBehavior={handleModelSelection}
+                            showLabelOnCLick={false}
+                            disabled={false}
+                        />
+                        <ButtonComponent
+                            defaultIcon={<SendHorizonal />}
+                            changeIconOnClick={true}
+                            activeIcon={mode === "search" ? <CircleStop /> : <SendHorizonal />}
+                            showLabelOnCLick={false}
+                            clickBehavior={handleSearch}
+                            shortcut={<><CommandIcon /> + <CornerDownLeft /></>}
+                        />
+                    </div>
                 </div>
             </div>
         </motion.div>

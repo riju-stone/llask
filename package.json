@@ -15,17 +15,17 @@
     "@tauri-apps/plugin-opener": "^2.2.7",
     "@tauri-apps/plugin-updater": "~2.7.1",
     "lucide-react": "^0.509.0",
-    "motion": "^12.12.2",
+    "motion": "^12.16.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2.5.0",
-    "@types/react": "^18.3.22",
+    "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
-    "@vitejs/plugin-react": "^4.5.0",
-    "sass": "^1.89.0",
+    "@vitejs/plugin-react": "^4.5.2",
+    "sass": "^1.89.2",
     "typescript": "~5.6.3",
     "vite": "^6.3.5"
   }
