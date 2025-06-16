@@ -9,8 +9,12 @@
     "main"
   ],
   "permissions": [
+    "core:default",
     "updater:default",
     "autostart:default",
-    "core:window:allow-set-size"
+    "core:window:allow-set-size",
+    "clipboard-manager:allow-read-text",
+    "clipboard-manager:allow-write-text",
+    "clipboard-manager:default"
   ]
 }

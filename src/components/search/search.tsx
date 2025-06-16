@@ -1,9 +1,8 @@
 import { useRef, useEffect, useState } from "react"
 import styles from "./styles.module.scss"
 import { motion } from "motion/react"
-import { easeIn } from "motion"
 import ButtonComponent from "../custom/button"
-import { SendHorizonal, File, Brain, Image, Earth, CommandIcon, CornerDownLeft, Package, Hash, CircleStop, PackageOpen } from "lucide-react"
+import { SendHorizonal, Brain, Earth, CommandIcon, CornerDownLeft, Package, Hash, CircleStop, PackageOpen } from "lucide-react"
 import { useResizeAppWindow } from "../../hooks/resize"
 import debounce from "../../utils/debounce"
 
@@ -17,32 +16,6 @@ function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
     const searchContainer = useRef(null)
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const [containerHeight, setContainerHeight] = useState("5rem")
-
-    const searchBarAnim = {
-        initial: {
-            height: "0px",
-            opacity: 0
-        },
-        show: {
-            opacity: 1,
-            height: `${containerHeight}`,
-            transition: {
-                duration: 0.5,
-                ease: [0.83, 0, 0.17, 1],
-                opacity: {
-                    duration: 0.2
-                }
-            },
-        },
-        search: {
-            height: `${containerHeight}`,
-            opacity: 1,
-            transition: {
-                duration: 0.2,
-                ease: easeIn
-            },
-        }
-    }
 
     const handleInput = debounce(() => {
         if (textareaRef.current) {
@@ -114,7 +87,27 @@ function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
             ref={searchContainer}
             className={`${styles.searchWrapper} ${mode == "search" ? styles.searchWrapperActive : styles.searchWrapperInActive}`}
             style={{ height: mode == "search" ? containerHeight : "6rem" }}
-            variants={searchBarAnim}
+            variants={{
+                initial: { height: "6rem", opacity: 0 },
+                show: {
+                    opacity: 1,
+                    height: "6rem",
+                    transition: {
+                        duration: 0.3,
+                        ease: [0.04, 0.62, 0.23, 0.98],
+                        opacity: { duration: 0.15 }
+                    }
+                },
+                search: {
+                    height: containerHeight,
+                    opacity: 1,
+                    transition: {
+                        duration: 0.3,
+                        ease: [0.04, 0.62, 0.23, 0.98],
+                        opacity: { duration: 0.15 }
+                    }
+                }
+            }}
             initial="initial"
             animate={mode == "search" ? "search" : "show"}
         >
@@ -143,14 +136,6 @@ function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
                         <ButtonComponent
                             defaultIcon={<Brain />} buttonLabel="Deep Think" clickBehavior={() => { }}
                             showLabelOnCLick={true} changeIconOnClick={false} disabled={false}
-                        />
-                        <ButtonComponent
-                            defaultIcon={<File />} clickBehavior={() => { }}
-                            showLabelOnCLick={false} changeIconOnClick={false} disabled={false}
-                        />
-                        <ButtonComponent
-                            defaultIcon={<Image />} clickBehavior={() => { }}
-                            showLabelOnCLick={false} changeIconOnClick={false} disabled={false}
                         />
                     </div>
                     <div className={styles.modelNameContainer}>
