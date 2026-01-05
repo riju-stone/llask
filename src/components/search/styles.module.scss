@@ -16,7 +16,6 @@
   display: block;
   z-index: 9999;
   padding: 3px;
-  font-family: "Noto Sans", sans-serif;
   transition: height 0.15s ease !important;
   user-select: none;
 }
@@ -30,11 +29,11 @@
 
 .searchWrapperActive {
   background-image: linear-gradient(var(--angle),
-      #eea2a2 0%,
-      #bbc1bf 19%,
-      #57c6e1 42%,
-      #b49fda 79%,
-      #7ac5d8 100%);
+      #ff0f7b 0%,
+      #f89b29 25%,
+      #20e29d 50%,
+      #00bfff 75%,
+      #ff0f7b 100%);
   background-size: 100% 200%;
   animation: rotate 6s linear infinite;
   transition: 0.5s ease-in-out;

@@ -37,26 +37,38 @@ function ButtonComponent({
     };
 
     return (
-        <div className={styles.buttonWrapper}>
+        <motion.div
+            layout
+            className={styles.buttonWrapper}
+            initial={false}
+        >
             {shortcut && <div className={styles.buttonShortcutContainer}>{shortcut}</div>}
-            <AnimatePresence>
-                <motion.button
-                    transition={{ duration: 0.2 }}
-                    className={styles.buttonContainer} onClick={handleButtonClick} disabled={disabled}>
-                    {buttonLabel && showLabelOnCLick && buttonActive &&
+            <motion.button
+                layout
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                className={styles.buttonContainer}
+                onClick={handleButtonClick}
+                disabled={disabled}>
+                <AnimatePresence mode="wait">
+                    {buttonLabel && showLabelOnCLick && buttonActive && (
                         <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className={styles.buttonLabelContainer}>{buttonLabel}
-                        </motion.div>}
+                            key="label"
+                            initial={{ opacity: 0, x: -10, width: 0 }}
+                            animate={{ opacity: 1, x: 0, width: "auto" }}
+                            exit={{ opacity: 0, x: -10, width: 0 }}
+                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                            style={{ overflow: "hidden", whiteSpace: "nowrap" }}
+                            className={styles.buttonLabelContainer}>
+                            {buttonLabel}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
-                    <div className={styles.buttonIconContainer}>
-                        {changeIconOnClick && buttonActive ? activeIcon : defaultIcon}
-                    </div>
-                </motion.button>
-            </AnimatePresence>
-        </div>
+                <div className={styles.buttonIconContainer}>
+                    {changeIconOnClick && buttonActive ? activeIcon : defaultIcon}
+                </div>
+            </motion.button>
+        </motion.div>
     )
 }
 

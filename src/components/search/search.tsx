@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react"
 import styles from "./styles.module.scss"
-import { motion } from "motion/react"
+import { AnimatePresence, motion } from "motion/react"
 import ButtonComponent from "../custom/button"
 import { SendHorizonal, Brain, Earth, CommandIcon, CornerDownLeft, Package, Hash, CircleStop, PackageOpen } from "lucide-react"
 import { useResizeAppWindow } from "../../hooks/resize"
@@ -142,23 +142,25 @@ function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
                         <div className={styles.modelName}>{currModel}</div>
                     </div>
                     <div className={styles.actionsContainer}>
-                        <ButtonComponent
-                            defaultIcon={<Package />}
-                            changeIconOnClick={true}
-                            activeIcon={mode !== "model" ? <Package /> : <PackageOpen />}
-                            shortcut={<><CommandIcon /> + <Hash /></>}
-                            clickBehavior={handleModelSelection}
-                            showLabelOnCLick={false}
-                            disabled={false}
-                        />
-                        <ButtonComponent
-                            defaultIcon={<SendHorizonal />}
-                            changeIconOnClick={true}
-                            activeIcon={mode === "search" ? <CircleStop /> : <SendHorizonal />}
-                            showLabelOnCLick={false}
-                            clickBehavior={handleSearch}
-                            shortcut={<><CommandIcon /> + <CornerDownLeft /></>}
-                        />
+                        <AnimatePresence>
+                            <ButtonComponent
+                                defaultIcon={<Package />}
+                                changeIconOnClick={true}
+                                activeIcon={mode !== "model" ? <Package /> : <PackageOpen />}
+                                shortcut={<><CommandIcon /> + <Hash /></>}
+                                clickBehavior={handleModelSelection}
+                                showLabelOnCLick={false}
+                                disabled={false}
+                            />
+                            <ButtonComponent
+                                defaultIcon={<SendHorizonal />}
+                                changeIconOnClick={true}
+                                activeIcon={mode === "search" ? <CircleStop /> : <SendHorizonal />}
+                                showLabelOnCLick={false}
+                                clickBehavior={handleSearch}
+                                shortcut={<><CommandIcon /> + <CornerDownLeft /></>}
+                            />
+                        </AnimatePresence>
                     </div>
                 </div>
             </div>
