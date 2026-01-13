@@ -1,60 +1,16 @@
-import { useRef, useEffect, useState } from "react"
+import { useRef } from "react"
 import styles from "./styles.module.scss"
 import { AnimatePresence, motion } from "motion/react"
 import ButtonComponent from "../custom/button"
 import { SendHorizonal, Brain, Earth, CommandIcon, CornerDownLeft, Package, Hash, CircleStop, PackageOpen } from "lucide-react"
-import { useResizeAppWindow } from "../../hooks/resize"
-import debounce from "../../utils/debounce"
 
-type SearchComponentProps = {
-    mode: string;
-    setMode: (mode: string) => void;
-    currModel?: string;
-}
+import { useAppStore } from "../../store/app"
 
-function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
-    const searchContainer = useRef(null)
+function SearchComponent() {
+    const { mode, setMode, currentModel, webSearch, deepThink, setWebSearch, setDeepThink } = useAppStore();
+
+    const searchContainer = useRef<HTMLDivElement>(null)
     const textareaRef = useRef<HTMLTextAreaElement>(null)
-    const [containerHeight, setContainerHeight] = useState("5rem")
-
-    const handleInput = debounce(() => {
-        if (textareaRef.current) {
-            // Reset height to calculate properly
-            textareaRef.current.style.height = "auto";
-
-            // Calculate the new height based on content
-            const scrollHeight = textareaRef.current.scrollHeight;
-
-            // Set textarea height directly to avoid scroll
-            textareaRef.current.style.height = `${scrollHeight}px`;
-
-            // Update container height - accounting for padding and action container
-            const actionContainerHeight = 16; // 2.5rem in pixels
-            const padding = 32; // Additional padding for container
-
-            // Calculate new container height with constraints
-            const minHeight = 80; // 5rem
-            const maxHeight = 160; // 10rem
-            const newHeight = Math.min(Math.max(scrollHeight + actionContainerHeight + padding, minHeight), maxHeight);
-
-            // Important: Update both state and directly set the style
-            setContainerHeight(`${newHeight}px`)
-
-            // Sett a fixed window height when im search mode
-            // This is a workaround to ensure the app window resizes correctly
-            // when the search bar expands
-            if (mode === "search" || mode === "model") {
-                useResizeAppWindow((510 + newHeight) - 90);
-            } else if (mode === "off") {
-                useResizeAppWindow(newHeight + 15);
-            }
-
-            // Directly set the style on the container for immediate effect
-            if (searchContainer.current) {
-                (searchContainer.current as HTMLElement).style.height = `${newHeight}px`;
-            }
-        }
-    }, 100)
 
     const handleSearch = () => {
         if (mode === "search") {
@@ -71,27 +27,15 @@ function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
             setMode("off");
         }
     }
-
-    // Ensure textarea is properly sized when component mounts or mode state changes
-    useEffect(() => {
-        if (textareaRef.current) {
-            // Add a slight delay to ensure DOM is ready
-            setTimeout(() => {
-                handleInput();
-            }, 10);
-        }
-    }, [mode]);
-
     return (
         <motion.div
             ref={searchContainer}
             className={`${styles.searchWrapper} ${mode == "search" ? styles.searchWrapperActive : styles.searchWrapperInActive}`}
-            style={{ height: mode == "search" ? containerHeight : "6rem" }}
+            // style={{ height: mode == "search" ? `${containerHeight}px` : "6rem" }}
             variants={{
-                initial: { height: "6rem", opacity: 0 },
+                initial: { opacity: 0 },
                 show: {
                     opacity: 1,
-                    height: "6rem",
                     transition: {
                         duration: 0.3,
                         ease: [0.04, 0.62, 0.23, 0.98],
@@ -99,7 +43,6 @@ function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
                     }
                 },
                 search: {
-                    height: containerHeight,
                     opacity: 1,
                     transition: {
                         duration: 0.3,
@@ -117,29 +60,37 @@ function SearchComponent({ mode, setMode, currModel }: SearchComponentProps) {
                         ref={textareaRef}
                         placeholder="Ask Anything..."
                         className={styles.searchInput}
-                        autoComplete="off"
-                        autoCorrect="off"
-                        spellCheck="false"
+                        autoComplete="true"
+                        autoCorrect="true"
+                        spellCheck={true}
                         aria-multiline="true"
                         autoFocus
-                        onInput={handleInput}
-                        onChange={handleInput}
                         rows={1}
                     />
                 </div>
                 <div className={styles.searchActionContainer}>
                     <div className={styles.searchActionButtonContainer}>
                         <ButtonComponent
-                            defaultIcon={<Earth />} buttonLabel="Web Search" clickBehavior={() => { }}
-                            showLabelOnCLick={true} changeIconOnClick={false} disabled={false}
+                            defaultIcon={<Earth />}
+                            buttonLabel="Web Search"
+                            clickBehavior={() => setWebSearch(!webSearch)}
+                            isActive={webSearch}
+                            showLabelOnCLick={true}
+                            changeIconOnClick={false}
+                            disabled={false}
                         />
                         <ButtonComponent
-                            defaultIcon={<Brain />} buttonLabel="Deep Think" clickBehavior={() => { }}
-                            showLabelOnCLick={true} changeIconOnClick={false} disabled={false}
+                            defaultIcon={<Brain />}
+                            buttonLabel="Deep Think"
+                            clickBehavior={() => setDeepThink(!deepThink)}
+                            isActive={deepThink}
+                            showLabelOnCLick={true}
+                            changeIconOnClick={false}
+                            disabled={false}
                         />
                     </div>
                     <div className={styles.modelNameContainer}>
-                        <div className={styles.modelName}>{currModel}</div>
+                        <div className={styles.modelName}>{currentModel}</div>
                     </div>
                     <div className={styles.actionsContainer}>
                         <AnimatePresence>

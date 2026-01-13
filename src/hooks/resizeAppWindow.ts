@@ -1,7 +1,7 @@
 
 import { getCurrentWindow, LogicalSize } from "@tauri-apps/api/window"
 
-export const useResizeAppWindow = async (height: number) => { 
+export const useResizeAppWindow = async (height: number) => {
     const win = getCurrentWindow();
 
     let currSize = await win.outerSize()
@@ -13,6 +13,6 @@ export const useResizeAppWindow = async (height: number) => {
         setTimeout(() => {
             win.setSize(new LogicalSize(600, height));
         }
-        , 800);
+            , 800);
     }
 }

@@ -11,6 +11,7 @@ type ButtonProps = {
     changeIconOnClick: boolean;
     buttonLabel?: string;
     activeIcon?: React.ReactNode;
+    isActive?: boolean;
 }
 
 function ButtonComponent({
@@ -21,8 +22,13 @@ function ButtonComponent({
     showLabelOnCLick,
     changeIconOnClick,
     buttonLabel,
-    activeIcon }: ButtonProps) {
-    const [buttonActive, setButtonActive] = React.useState(false);
+    activeIcon,
+    isActive }: ButtonProps) {
+    const [internalActive, setInternalActive] = React.useState(false);
+
+    // Use controlled state if provided, otherwise internal state
+    const isControlled = isActive !== undefined;
+    const buttonActive = isControlled ? isActive : internalActive;
 
     const handleButtonClick: React.MouseEventHandler = (event) => {
         if (disabled) {
@@ -30,8 +36,10 @@ function ButtonComponent({
             return;
         }
 
-        console.log("Button clicked, showing label:", buttonLabel);
-        setButtonActive(!buttonActive);
+        // Only toggle internal state if not controlled
+        if (!isControlled) {
+            setInternalActive(!internalActive);
+        }
 
         clickBehavior(event);
     };

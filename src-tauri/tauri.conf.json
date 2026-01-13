@@ -11,19 +11,7 @@
   },
   "app": {
     "macOSPrivateApi": true,
-    "windows": [
-      {
-        "title": "ask",
-        "transparent": true,
-        "width": 600,
-        "height": 100,
-        "resizable": false,
-        "skipTaskbar": true,
-        "decorations": false,
-        "contentProtected": true,
-        "alwaysOnTop": true
-      }
-    ],
+    "windows": [],
     "security": {
       "csp": "default-src 'self' 'unsafe-inline' 'unsafe-eval'"
     }

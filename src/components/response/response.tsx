@@ -2,11 +2,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 
 import styles from './styles.module.scss'
-
-type ResponseComponentProps = {
-    mode: string,
-    setModel?: (model: string) => void;
-}
+import { useAppStore } from "../../store/app"
+import ModelSwitcher from '../model-switcher/model-switcher';
 
 const responseAnim = {
     initial: {
@@ -18,7 +15,7 @@ const responseAnim = {
         y: 0,
         transition: {
             duration: 0.6,
-            ease: [0.83, 0, 0.17, 1],
+            ease: [0.83, 0, 0.17, 1] as [number, number, number, number],
             opacity: {
                 duration: 0.2,
                 delay: 0.2
@@ -27,7 +24,9 @@ const responseAnim = {
     }
 }
 
-function ResponseComponent({ mode }: ResponseComponentProps) {
+function ResponseComponent() {
+    const { mode } = useAppStore();
+
     return (
         <motion.div
             className={styles.responseWrapper}
@@ -47,7 +46,9 @@ function ResponseComponent({ mode }: ResponseComponentProps) {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 100 }}
                     transition={{ duration: 0.3, ease: [0.83, 0, 0.17, 1] }}
-                    className={styles.responseChatContainer}>{mode}</motion.div>}
+                    className={styles.responseGeneratorContainer}>
+                    <ModelSwitcher />
+                </motion.div>}
             </AnimatePresence>
         </motion.div>
     )
