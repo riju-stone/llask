@@ -15,7 +15,7 @@ pub fn run() {
         .setup(|app| {
             let window = WebviewWindowBuilder::new(app, "main", WebviewUrl::default())
                 .title("Ask")
-                .inner_size(600.0, 300.0)
+                .inner_size(600.0, 120.0)
                 .decorations(false)
                 .transparent(true)
                 // .always_on_top(true)

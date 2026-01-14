@@ -6,8 +6,7 @@
 
 .searchWrapper {
   position: relative;
-  background: rgba(44, 90, 145, 0.4);
-  height: 100vh;
+  // height: 100vh;
   width: 100vw;
   border-radius: 10px;
   border: none;
@@ -33,8 +32,7 @@
 
 .searchInputContainer {
   position: relative;
-  background: rgba(11, 28, 49, 0.4);
-  height: 100%;
+  background: rgba(11, 28, 49, 0.3);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -80,11 +78,7 @@
 }
 
 .searchActionContainer {
-  position: absolute;
-  bottom: 0;
   z-index: 55;
-  position: relative;
-  bottom: 0;
   height: 2.5rem;
   min-height: 2.5rem; // Ensure minimum height
   width: 100%;

@@ -5,57 +5,57 @@ import ButtonComponent from "../custom/button"
 import { SendHorizonal, Brain, Earth, CommandIcon, CornerDownLeft, Package, Hash, CircleStop, PackageOpen } from "lucide-react"
 
 import { useAppStore } from "../../store/app"
+import { useResizeAppWindow } from "../../hooks/resizeAppWindow"
+
+const searchComponentAnim = {
+    searchWrapper: {
+        initial: { height: "160px" },
+        expand: { height: "115px" },
+        collapse: { height: "160px" },
+        transition: { duration: 0.75, type: "spring" }
+    },
+    searchTextBox: {
+        initial: { height: "10px" },
+        expand: { height: "50px" },
+        collapse: { height: "90px" },
+        transition: { duration: 0.75, type: "spring" }
+    }
+}
 
 function SearchComponent() {
     const { mode, setMode, currentModel, webSearch, deepThink, setWebSearch, setDeepThink } = useAppStore();
 
-    const searchContainer = useRef<HTMLDivElement>(null)
     const textareaRef = useRef<HTMLTextAreaElement>(null)
 
     const handleSearch = () => {
         if (mode === "search") {
             setMode("off");
+            useResizeAppWindow(600, 120);
         } else {
             setMode("search");
+            useResizeAppWindow(600, 500);
         }
     }
 
     const handleModelSelection = () => {
         if (mode === "search" || mode === "off") {
             setMode("model");
+            useResizeAppWindow(600, 500);
         } else if (mode === "model") {
             setMode("off");
+            useResizeAppWindow(600, 120);
         }
     }
     return (
-        <motion.div
-            ref={searchContainer}
-            className={`${styles.searchWrapper} ${mode == "search" ? styles.searchWrapperActive : styles.searchWrapperInActive}`}
-            // style={{ height: mode == "search" ? `${containerHeight}px` : "6rem" }}
-            variants={{
-                initial: { opacity: 0 },
-                show: {
-                    opacity: 1,
-                    transition: {
-                        duration: 0.3,
-                        ease: [0.04, 0.62, 0.23, 0.98],
-                        opacity: { duration: 0.15 }
-                    }
-                },
-                search: {
-                    opacity: 1,
-                    transition: {
-                        duration: 0.3,
-                        ease: [0.04, 0.62, 0.23, 0.98],
-                        opacity: { duration: 0.15 }
-                    }
-                }
-            }}
+        <motion.div className={`${styles.searchWrapper}`}
+            variants={searchComponentAnim.searchWrapper}
             initial="initial"
-            animate={mode == "search" ? "search" : "show"}
-        >
+            animate={mode === "search" || mode === "model" ? "expand" : "collapse"}>
             <div className={styles.searchContainer}>
-                <div className={styles.searchInputContainer}>
+                <motion.div className={styles.searchInputContainer}
+                    variants={searchComponentAnim.searchTextBox}
+                    initial="initial"
+                    animate={mode === "search" || mode === "model" ? "expand" : "collapse"}>
                     <textarea
                         ref={textareaRef}
                         placeholder="Ask Anything..."
@@ -67,7 +67,7 @@ function SearchComponent() {
                         autoFocus
                         rows={1}
                     />
-                </div>
+                </motion.div>
                 <div className={styles.searchActionContainer}>
                     <div className={styles.searchActionButtonContainer}>
                         <ButtonComponent
