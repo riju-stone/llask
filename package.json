@@ -2,19 +2,18 @@
   "name": "ask",
   "private": true,
   "version": "0.1.0",
+  "description": "An AI assistant desktop application",
+  "main": "electron/main.cjs",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri",
-    "dev:app": "tauri dev"
+    "electron:dev": "vite build && electron .",
+    "electron:build": "vite build && electron-builder"
   },
   "dependencies": {
-    "@tauri-apps/api": "^2.9.1",
-    "@tauri-apps/plugin-autostart": "~2.3.0",
-    "@tauri-apps/plugin-opener": "^2.5.2",
-    "@tauri-apps/plugin-updater": "~2.7.1",
+    "electron-log": "^5.2.4",
     "lucide-react": "^0.509.0",
     "motion": "^12.24.0",
     "react": "^18.3.1",
@@ -22,12 +21,34 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^2.9.6",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.7.0",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
     "sass": "^1.97.1",
     "typescript": "~5.6.3",
     "vite": "^6.4.1"
+  },
+  "build": {
+    "appId": "com.stone.ask",
+    "productName": "Ask",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "mac": {
+      "icon": "src-tauri/icons/icon.icns",
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "icon": "src-tauri/icons/icon.ico"
+    },
+    "linux": {
+      "icon": "src-tauri/icons"
+    }
   }
 }
